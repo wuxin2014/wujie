@@ -5,6 +5,7 @@ body {
   padding: 0px;
   width: auto;
   position: relative;
+  /* height: auto; */
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

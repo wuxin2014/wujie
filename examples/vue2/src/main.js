@@ -37,7 +37,7 @@ const base = process.env.NODE_ENV === "production" ? "/demo-vue2/" : "";
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
-
+debugger
 if (window.__POWERED_BY_WUJIE__) {
   let instance;
   window.__WUJIE_MOUNT = () => {

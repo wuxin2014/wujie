@@ -38,6 +38,7 @@ bus.$on("sub-route-change", (name, path) => {
   }
 });
 
+debugger
 const degrade = window.localStorage.getItem("degrade") === "true" || !window.Proxy || !window.CustomElementRegistry;
 const props = {
   jump: (name) => {
@@ -75,7 +76,7 @@ setupApp({
   alive: true,
   props,
   fetch: credentialsFetch,
-  degrade,
+  degrade: true,
   ...lifecycles,
 });
 
@@ -87,6 +88,7 @@ setupApp({
   props,
   fetch: credentialsFetch,
   degrade,
+  degradeAttrs: { style: 'height: 100vh'},
   ...lifecycles,
 });
 

@@ -162,6 +162,7 @@ function patchIframeHistory(iframeWindow: Window, appHostPath: string, mainHostP
   const history = iframeWindow.history;
   const rawHistoryPushState = history.pushState;
   const rawHistoryReplaceState = history.replaceState;
+  // 重写pushState方法
   history.pushState = function (data: any, title: string, url?: string): void {
     const baseUrl =
       mainHostPath + iframeWindow.location.pathname + iframeWindow.location.search + iframeWindow.location.hash;
@@ -173,6 +174,7 @@ function patchIframeHistory(iframeWindow: Window, appHostPath: string, mainHostP
     updateBase(iframeWindow, appHostPath, mainHostPath);
     syncUrlToWindow(iframeWindow);
   };
+  // 重写replaceState方法
   history.replaceState = function (data: any, title: string, url?: string): void {
     const baseUrl =
       mainHostPath + iframeWindow.location.pathname + iframeWindow.location.search + iframeWindow.location.hash;
@@ -771,6 +773,7 @@ export function insertScriptToIframe(
 
 /**
  * 加载iframe替换子应用
+ * 注意点
  * @param src 地址
  * @param element
  * @param degradeAttrs
