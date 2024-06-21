@@ -141,11 +141,25 @@ export default {
             label: '设计原则设计原则设计原则',
           }],
         }
-      ]
+      ],
+      popperOptions: {
+        // boundariesElement: 'viewport',
+        // removeOnDestroy: true,
+        modifiers: [ // ElementPlus有的属性待验证
+          {
+            name: 'flip',
+            options: {
+              fallbackPlacements: ['bottom'],
+              allowedAutoPlacements: ['bottom'],
+            }
+          }
+        ]
+      },
     }
   },
   mounted() {
     console.log('sub-application', window, window.parent)
+    console.log('window.document.body==', window.document.body) // 注意子应用的body
   }
 }
 </script>
