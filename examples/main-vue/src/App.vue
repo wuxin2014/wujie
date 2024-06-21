@@ -38,6 +38,7 @@
         <router-link to="/vue2-sub/dialog">dialog</router-link>
         <router-link to="/vue2-sub/location">location</router-link>
         <router-link to="/vue2-sub/communication">communication</router-link>
+        <router-link to="/vue2-sub/pageTest">pageTest</router-link>
       </div>
       <!-- vue3相关路由 -->
       <router-link v-if="degrade" to="/vue3">
