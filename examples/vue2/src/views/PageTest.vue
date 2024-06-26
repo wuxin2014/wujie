@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 20px">
+  <div style="padding: 20px 0" ref="comp">
     <el-form :model="searchForm" label-width="100px">
       <el-row>
         <el-col :span="8">
@@ -36,21 +36,24 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="级联选项">
-            <el-cascader
+            <!-- <el-cascader
               v-model="searchForm.value"
               :options="options"
               :append-to-body="false"
               popper-class="custom-popper-class"
               :arrowOffset="120"
               style="width: 100%">
-            </el-cascader>
-            <!-- <el-cascader
+            </el-cascader> -->
+            <!-- :popper-options="popperOptions" -->
+            <el-cascader
+              ref="cascaderRef"
               v-model="searchForm.value"
               :options="options"
               :append-to-body="true"
-              :offset="0"
+              :popper-options="popperOptions"
+              :offset="-15"
               style="width: 100%">
-            </el-cascader> -->
+            </el-cascader>
           </el-form-item>
         </el-col>
       </el-row>
@@ -95,6 +98,7 @@
           <!-- placement="bottom-end" :offset="210" align="right" :arrowOffset="400" :append-to-body="false" popper-class="custom-popper-class-right"-->
           <el-form-item label="过期1时间">
             <el-date-picker
+              ref="datePickerRef"
               v-model="searchForm.expire_date"
               type="daterange"
               range-separator="~"
@@ -110,13 +114,22 @@
         </el-col>
       </el-row>
     </el-form>
+    <!-- el-select多选组件filterable功能失效  -->
+    <el-select v-model="value1" multiple filterable placeholder="请选择">
+      <el-option
+        v-for="item in optionList"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
+      value1: '',
       searchForm: {
         value: [],
         effect_date: [],
@@ -132,6 +145,22 @@ export default {
         //   return that.$moment(time).format('YYYYMMDD') > that.$moment().add(1, 'years').format('YYYYMMDD')
         // }
       },
+      optionList: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
       options: [
         {
           value: 'zhinan',
@@ -142,24 +171,29 @@ export default {
           }],
         }
       ],
-      popperOptions: {
-        // boundariesElement: 'viewport',
-        // removeOnDestroy: true,
-        modifiers: [ // ElementPlus有的属性待验证
-          {
-            name: 'flip',
-            options: {
-              fallbackPlacements: ['bottom'],
-              allowedAutoPlacements: ['bottom'],
-            }
-          }
-        ]
-      },
+      popperOptions: { gpuAcceleration: true, removeOnDestroy: true },
+      // popperOptions: {
+      //   // boundariesElement: 'viewport',
+      //   // removeOnDestroy: true,
+      //   modifiers: [ // ElementPlus有的属性待验证
+      //     {
+      //       name: 'flip',
+      //       options: {
+      //         fallbackPlacements: ['bottom'],
+      //         allowedAutoPlacements: ['bottom'],
+      //       }
+      //     }
+      //   ]
+      // },
     }
   },
   mounted() {
     console.log('sub-application', window, window.parent)
     console.log('window.document.body==', window.document.body) // 注意子应用的body
+    this.popperOptions = { ...this.popperOptions, boundariesElement: this.$refs.comp };
+    this.$nextTick(()=>{
+      // this.$refs.cascaderRef.updatePopper();
+    })
   }
 }
 </script>

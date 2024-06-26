@@ -1,5 +1,6 @@
 import "whatwg-fetch"; // fetch polyfill
 import "custom-event-polyfill";
+import { EventTargetPlugin } from "wujie-polyfill";
 
 import Vue from "vue";
 import App from "./App.vue";
@@ -89,7 +90,8 @@ setupApp({
   fetch: credentialsFetch,
   degrade,
   degradeAttrs: { style: 'height: 100vh'},
-  ...lifecycles,
+  plugins: [EventTargetPlugin()],
+  ...lifecycles
 });
 
 setupApp({
