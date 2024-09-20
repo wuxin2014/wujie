@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <div id="nav" :class="active ? 'active' : ''" @click="close">
+    <div style="position: relative;">
+      <div id="nav" :class="active ? 'active' : ''" @click="close" >
       <router-link to="/home">介绍</router-link>
       <!-- react16相关路由 -->
       <router-link to="/react16">
@@ -66,6 +67,9 @@
       <router-link to="/all">all</router-link>
       <a-button class="menu-icon" type="primary" icon="unordered-list" size="large" @click.stop="active = !active" />
     </div>
+    <!-- <div style="position: absolute; left: 210px; top: 0; width: 300px; height: 100%; background-color: aquamarine; z-index: 9999;"></div> -->
+  </div>
+    
     <div class="content" @click="active = false">
       <router-view />
     </div>

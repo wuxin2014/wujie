@@ -10,6 +10,7 @@ import hostMap from "../hostMap";
 export default {
   computed: {
     vue2Url() {
+      // 路由拼接#，子应用默认是hash
       return hostMap("//localhost:7200/") + `#/${this.$route.params.path}`;
     },
   },

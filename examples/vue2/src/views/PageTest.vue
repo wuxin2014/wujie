@@ -13,8 +13,8 @@
               format="yyyyMMdd"
               value-format="yyyyMMdd"
               :pickerOptions="startPickerOptions"
-              :append-to-body="true"
-              :offset="-100"
+              :append-to-body="false"
+              popper-class="custom-popper-class"
               style="width: 100%">
             </el-date-picker>
           </el-form-item>
@@ -112,28 +112,33 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
+        <el-col :span="8">
+          <el-form-item label="标签">
+            <!-- el-select多选组件filterable功能失效  -->
+            <el-select v-model="searchForm.tagValue" multiple filterable placeholder="请选择">
+              <el-option
+                v-for="item in optionList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
-    <!-- el-select多选组件filterable功能失效  -->
-    <el-select v-model="value1" multiple filterable placeholder="请选择">
-      <el-option
-        v-for="item in optionList"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
-    </el-select>
+    
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      value1: '',
       searchForm: {
         value: [],
         effect_date: [],
-        expire_date: []
+        expire_date: [],
+        tagValue: ''
       },
       startPickerOptions: {
         // disabledDate(time) {
@@ -188,12 +193,20 @@ export default {
     }
   },
   mounted() {
+    // this.$PLoading.show()
     console.log('sub-application', window, window.parent)
     console.log('window.document.body==', window.document.body) // 注意子应用的body
     this.popperOptions = { ...this.popperOptions, boundariesElement: this.$refs.comp };
     this.$nextTick(()=>{
       // this.$refs.cascaderRef.updatePopper();
     })
+  },
+  methods: {
+    toggleBody(isPin = false) {
+      // 无界中，子应用打开弹窗隐藏页面滚动条
+      if (!window.__POWERED_BY_WUJIE__) return;
+      parent.document.body.style.overflow = isPin ? 'hidden' : 'auto';
+    }
   }
 }
 </script>

@@ -17,6 +17,8 @@ import "ant-design-vue/es/select/style/index.css";
 import "ant-design-vue/es/modal/style/index.css";
 import "ant-design-vue/es/popover/style/index.css";
 import "./index.css";
+import LoadingPlugin from './components/loading';
+Vue.use(LoadingPlugin);
 
 const base = process.env.NODE_ENV === "production" ? "/demo-vue2/" : "";
 [Tag, Button, Select, Option, Popover, Dialog, Cascader, DatePicker, Form, FormItem, Row, Col].forEach((element) => Vue.use(element));
