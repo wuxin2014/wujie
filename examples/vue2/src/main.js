@@ -4,7 +4,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import routes from "./router";
 import VueRouter from "vue-router";
-import { Tag, Button, Select, Option, Popover, Dialog, Cascader, DatePicker, Form, FormItem, Row, Col } from 'element-ui';
+import { Scrollbar, Tag, Button, Select, Option, Popover, Dialog, Cascader, DatePicker, Form, FormItem, Row, Col, Input } from 'element-ui';
 import "element-ui/lib/theme-chalk/index.css";
 import AButton from "ant-design-vue/es/button";
 import ASelect from "ant-design-vue/es/select";
@@ -21,7 +21,8 @@ import LoadingPlugin from './components/loading';
 Vue.use(LoadingPlugin);
 
 const base = process.env.NODE_ENV === "production" ? "/demo-vue2/" : "";
-[Tag, Button, Select, Option, Popover, Dialog, Cascader, DatePicker, Form, FormItem, Row, Col].forEach((element) => Vue.use(element));
+[Scrollbar, Tag, Button, Select, Option, Popover, Dialog, Cascader, DatePicker, Form, FormItem, Row, Col, Input].forEach((element) => Vue.use(element));
+
 [AButton, ASelect, AModal, APopover].forEach((element) => Vue.use(element));
 
 Vue.use(VueRouter);

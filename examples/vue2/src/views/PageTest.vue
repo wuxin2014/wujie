@@ -125,20 +125,42 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :span="8">
+          <el-form-item label="标签2">
+            <!-- el-select多选组件filterable功能失效  -->
+            <u-select v-model="searchForm.tagValue" multiple filterable placeholder="请选择">
+              <el-option
+                v-for="item in optionList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </u-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="名字">
+            <el-input v-model="searchForm.name" placeholder="请选择" @input="handleInput('kkk',$event)" />
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
-    
   </div>
 </template>
 <script>
+import USelect from '../components/USelect/index.vue'
 export default {
+  components: {
+    USelect
+  },
   data() {
     return {
       searchForm: {
         value: [],
         effect_date: [],
         expire_date: [],
-        tagValue: ''
+        tagValue: '',
+        name: ''
       },
       startPickerOptions: {
         // disabledDate(time) {
@@ -193,7 +215,10 @@ export default {
     }
   },
   mounted() {
-    // this.$PLoading.show()
+    this.$PLoading.show()
+    setTimeout(() => {
+      this.$PLoading.hide()
+    }, 4000);
     console.log('sub-application', window, window.parent)
     console.log('window.document.body==', window.document.body) // 注意子应用的body
     this.popperOptions = { ...this.popperOptions, boundariesElement: this.$refs.comp };
@@ -206,6 +231,9 @@ export default {
       // 无界中，子应用打开弹窗隐藏页面滚动条
       if (!window.__POWERED_BY_WUJIE__) return;
       parent.document.body.style.overflow = isPin ? 'hidden' : 'auto';
+    },
+    handleInput(data, e) {
+      console.log('e.target====', e.target)
     }
   }
 }

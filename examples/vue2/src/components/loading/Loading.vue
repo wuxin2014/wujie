@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLoading" class="loading-overlay">
+  <div v-if="isLoading" class="page-global-loading">
     Loading...
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
 </script>
    
 <style scoped>
-  .loading-overlay {
+  .page-global-loading {
     position: fixed;
     top: 0;
     left: 0;
