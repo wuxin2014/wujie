@@ -16,4 +16,13 @@ module.exports = {
   transpileDependencies: [
     "sockjs-client",
   ],
+  configureWebpack: {
+    // 配置Webpack模块解析的方式，使得你可以通过模块名字而不是相对路径来引入模块
+    resolve: {
+      // 设置路径别名
+      alias: {
+        // 'element-ui': path.resolve(__dirname, '../node_modules/element-ui'),
+      }
+    }
+  }
 };

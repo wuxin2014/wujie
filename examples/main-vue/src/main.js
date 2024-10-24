@@ -90,7 +90,8 @@ setupApp({
   fetch: credentialsFetch,
   degrade,
   degradeAttrs: { style: 'height: 100vh'},
-  plugins: [EventTargetPlugin()],
+  plugins: [],
+  // plugins: [EventTargetPlugin()],
   ...lifecycles
 });
 
