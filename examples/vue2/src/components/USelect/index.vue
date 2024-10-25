@@ -856,8 +856,8 @@ export default {
       console.log('==evt.target=', e.target)
       console.log('=evt.target.shadowRoot=', e.target.shadowRoot)
       console.log('=evt.composed=', e.composed)
-      console.log('=evt.composedPath=', e.composedPath())
-			console.log('=evt.path=',e.path) // 有些浏览器返回了空数组
+      console.log('=evt.composedPath=', e.composedPath && e.composedPath()) // 有些浏览器返回了空数组
+			console.log('=evt.path=',e.path)
 
       let result = null
       if (e.composed && e.composedPath() && e.composedPath()[0]) {

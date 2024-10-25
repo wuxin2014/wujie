@@ -47,11 +47,13 @@ const polyfillEventPath = (appWindow) => {
     //     })
 
     // })
-
+    console.error('appWindow==', appWindow)
     function setupPath (e) {
+        console.error('setupPath=e==', e)
         if (e?.composed) {
             // @ts-ignore
             e.path = e.composedPath()
+            console.error('setupPath=e2==', e.composedPath())
         }
     }
 
@@ -69,7 +71,7 @@ const polyfillEventPath = (appWindow) => {
         const eventListeners = this.__eventListeners[eventName]
 
         if (eventListeners.length === 0) {
-            rawAddEventListener.apply(this, [args[0], setupPath, args[2]])
+            rawAddEventListener.apply(this, [args[0], setupPath, args[2]]) // addEventListener('evtName', fn, false)
         }
         this.__eventListeners[eventName].push(args[1])
         return rawAddEventListener.apply(this, args)
@@ -177,7 +179,6 @@ const patchEventTarget = (appWindow) => {
 
 
 export const EventTargetPlugin = () => {
-    console.log('EventTargetPlugin=======')
     return simpleJsBeforeLoader((appWindow) => {
         patchEventTarget(appWindow);
     });
