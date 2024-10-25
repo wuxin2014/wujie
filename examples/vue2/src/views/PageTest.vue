@@ -113,9 +113,35 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
+          <!-- el-select 单选filterable正常  -->
+          <el-form-item label="单选filterable">
+            <el-select 
+              v-model="searchForm.tagValue2"
+              filterable
+              placeholder="请选择"
+              style="width: 100%;"
+              :popper-append-to-body="false"
+              popper-class="custom-popper-class">
+              <el-option
+                v-for="item in optionList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
           <el-form-item label="标签">
             <!-- el-select多选组件filterable功能失效  -->
-            <el-select v-model="searchForm.tagValue" multiple filterable placeholder="请选择">
+            <el-select
+              v-model="searchForm.tagValue"
+              multiple
+              filterable
+              placeholder="请选择"
+              style="width: 100%;"
+              :popper-append-to-body="false"
+              popper-class="custom-popper-class">
               <el-option
                 v-for="item in optionList"
                 :key="item.value"
@@ -128,7 +154,14 @@
         <el-col :span="8">
           <el-form-item label="标签2">
             <!-- el-select多选组件filterable功能失效  -->
-            <u-select v-model="searchForm.tagValue" multiple filterable placeholder="请选择">
+            <u-select
+              v-model="searchForm.tagValue"
+              multiple
+              filterable
+              placeholder="请选择"
+              style="width: 100%;"
+              :popper-append-to-body="false"
+              popper-class="custom-popper-class">
               <el-option
                 v-for="item in optionList"
                 :key="item.value"
@@ -159,6 +192,7 @@ export default {
         value: [],
         effect_date: [],
         expire_date: [],
+        tagValue2: '',
         tagValue: '',
         name: ''
       },

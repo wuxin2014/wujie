@@ -480,6 +480,7 @@ export default {
         this.broadcast('ElOptionGroup', 'queryChange');
       } else {
         this.filteredOptionsCount = this.optionsCount;
+        console.log('handleQueryChange:', val)
         this.broadcast('ElOption', 'queryChange', val);
         this.broadcast('ElOptionGroup', 'queryChange');
       }
@@ -619,6 +620,7 @@ export default {
     },
 
     deletePrevTag(e) {
+      console.log('==deletePrevTag==', e.target)
       if (e.target.value.length <= 0 && !this.toggleLastOptionHitState()) {
         const value = this.value.slice();
         value.pop();
@@ -851,15 +853,12 @@ export default {
     });
 
     this.debouncedQueryChange = debounce(this.debounce, (e) => {
-      console.log('==debouncedQueryChange=', e.target)
+      console.log('==evt.target=', e.target)
       console.log('=evt.target.shadowRoot=', e.target.shadowRoot)
       console.log('=evt.composed=', e.composed)
-			console.log('=evt.composedPath=',e.composedPath()[0])
+      console.log('=evt.composedPath=', e.composedPath())
+			console.log('=evt.path=',e.path) // 有些浏览器返回了空数组
 
-			console.log('=evt.path=',e.path)
-			console.log('=evt.path[0]=',e.path[0].value)
-
-      // e.target = (e.target.shadowRoot && e.composed) ? (e.composedPath()[0] || e.target) : e.target
       let result = null
       if (e.composed && e.composedPath() && e.composedPath()[0]) {
         result = getTargetFromPath(e.composedPath(), e.type)
@@ -867,8 +866,9 @@ export default {
       if (e.path && e.path[0]) {
         result = getTargetFromPath(e.path, e.type)
       }
+      
       console.log('result==', result)
-      this.handleQueryChange(result.value);
+      this.handleQueryChange(result?.value || this.query);
     });
 
     this.$on('handleOptionClick', this.handleOptionSelect);
