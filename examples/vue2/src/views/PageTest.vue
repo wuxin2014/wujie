@@ -1,6 +1,6 @@
 <template>
   <div style="padding: 20px 0" ref="comp">
-    <el-form :model="searchForm" label-width="100px">
+    <el-form :model="searchForm" label-width="100px" size="small">
       <el-row>
         <el-col :span="8">
           <el-form-item label="申请时间">
@@ -178,16 +178,32 @@
         </el-col>
       </el-row>
     </el-form>
+    <el-button type="primary" @click="contractFillInDialogVisible = true">线上填写</el-button>
+
+    <contract-online-fill-in
+      v-if="contractFillInDialogVisible"
+      :visible="contractFillInDialogVisible"
+      :sys-info="sysInfo"
+      :search-info="searchInfo"
+      :contract-fill-info="contractFillInfo"
+      @close="contractFillInDialogVisible = false"
+    />
   </div>
 </template>
 <script>
 import USelect from '../components/USelect/index.vue'
+import ContractOnlineFillIn from '../components/czce/ContractOnlineFillIn.vue'
 export default {
   components: {
-    USelect
+    USelect,
+    ContractOnlineFillIn
   },
   data() {
     return {
+      contractFillInDialogVisible: false,
+      sysInfo: {},
+      searchInfo: {},
+      contractFillInfo: {},
       searchForm: {
         value: [],
         effect_date: [],
