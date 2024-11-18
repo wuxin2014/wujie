@@ -35,7 +35,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="级联选项">
+          <el-form-item label="级联选项3">
             <!-- <el-cascader
               v-model="searchForm.value"
               :options="options"
@@ -44,21 +44,19 @@
               :arrowOffset="120"
               style="width: 100%">
             </el-cascader> -->
-            <!-- :popper-options="popperOptions" -->
+            <!--  :popper-options="popperOptions" 可以解决边缘级联组件，下拉panel偏移问题  -->
             <el-cascader
               ref="cascaderRef"
               v-model="searchForm.value"
               :options="options"
               :append-to-body="true"
               :popper-options="popperOptions"
-              :offset="-15"
               style="width: 100%">
             </el-cascader>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
-        <!-- :append-to-body="false" popper-class="custom-popper-class"-->
         <el-col :span="8">
           <el-form-item label="申请时间">
             <el-date-picker
@@ -96,7 +94,7 @@
         </el-col>
         <el-col :span="8">
           <!-- placement="bottom-end" :offset="210" align="right" :arrowOffset="400" :append-to-body="false" popper-class="custom-popper-class-right"-->
-          <el-form-item label="过期1时间">
+          <el-form-item label="过期时间3">
             <el-date-picker
               ref="datePickerRef"
               v-model="searchForm.expire_date"
@@ -107,7 +105,9 @@
               format="yyyyMMdd"
               value-format="yyyyMMdd"
               :pickerOptions="endPickerOptions"
-              align="right"
+              :append-to-body="false"
+              popper-class="custom-popper-class-right"
+              :arrowOffset="400"
               style="width: 100%;">
             </el-date-picker>
           </el-form-item>
@@ -271,6 +271,7 @@ export default {
     }, 4000);
     console.log('sub-application', window, window.parent)
     console.log('window.document.body==', window.document.body) // 注意子应用的body
+    // 针对级联控件的popperOption
     this.popperOptions = { ...this.popperOptions, boundariesElement: this.$refs.comp };
     this.$nextTick(()=>{
       // this.$refs.cascaderRef.updatePopper();
@@ -296,6 +297,8 @@ export default {
 }
 
 .custom-popper-class-right {
-  margin-left: -360px;
+  position: absolute !important;
+  right: 0 !important;
+  left: auto !important;
 }
 </style>
