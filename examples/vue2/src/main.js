@@ -32,6 +32,7 @@ debugger
 if (window.__POWERED_BY_WUJIE__) {
   let instance;
   window.__WUJIE_MOUNT = () => {
+    document.documentElement.classList.add('iframeOnlineWeb')
     const router = new VueRouter({ base, routes });
     instance = new Vue({ router, render: (h) => h(App) }).$mount("#app");
   };

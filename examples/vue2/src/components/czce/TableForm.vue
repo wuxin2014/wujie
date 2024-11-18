@@ -30,7 +30,7 @@
         style="width: 100%"
       >
         <el-table-column
-          fix1ed
+          fixed
           type="index"
           label="序号"
           align="center"
@@ -39,6 +39,7 @@
         <el-table-column
           prop="variety"
           label="对应品种"
+          width="120"
           align="center">
           <template slot="header">
             <span class="header-label">对应品种</span>
@@ -189,7 +190,6 @@
                 :disabled="isDetail"
                 style="width: 100%;"
                 :append-to-body="true"
-                :offset="0"
               />
             </el-form-item>
           </template>
@@ -216,7 +216,6 @@
                 style="width: 100%;"
                 :append-to-body="true"
                 popper-class="custom-popper1-class"
-                :offset="170"
               />
             </el-form-item>
           </template>
@@ -252,8 +251,8 @@
                 v-model="scope.row.region"
                 placeholder="请选择活动区域"
                 style="width: 100%"
-                :popper-append-to-body="false"
-                popper-class="custom-popper-class">
+                :popper-append-to-body="true"
+                popper-class="custom-popper1-class">
                 <el-option label="区域一" value="shanghai"></el-option>
                 <el-option label="区域二" value="beijing"></el-option>
               </el-select>
@@ -281,7 +280,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          fixe2d="right"
+          fixed="right"
           v-if="!isDetail"
           label="操作"
           width="70px"
@@ -551,10 +550,12 @@ export default {
 /* // 若body样式有position:relative; 选择popper会展示不出来，需要设置el-table 的overflow为visible */
 .table-form-wrapper .el-table {
   width: 100%;
+  /* overflow: auto !important; */
   overflow: visible !important;
 }
 
 .table-form-wrapper .el-table .el-table__body-wrapper {
+  /* overflow: auto !important; */
   overflow: visible !important;
 }
 
