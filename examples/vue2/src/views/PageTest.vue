@@ -265,6 +265,9 @@ export default {
     }
   },
   mounted() {
+    console.log(window.parent === window)
+    console.log(window.parent.document.body.clientWidth, document.body.clientWidth)
+    console.log(window.parent.document.documentElement.clientHeight, document.documentElement.clientHeight)
     this.$PLoading.show()
     setTimeout(() => {
       this.$PLoading.hide()

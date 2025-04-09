@@ -31,6 +31,7 @@ bus.$on("click", (msg) => window.alert(msg));
 
 // 在 xxx-sub 路由下子应用将激活路由同步给主应用，主应用跳转对应路由高亮菜单栏
 bus.$on("sub-route-change", (name, path) => {
+  console.log('主应用sub-route-change', name, path)
   const mainName = `${name}-sub`;
   const mainPath = `/${name}-sub${path}`;
   const currentName = router.currentRoute.name;

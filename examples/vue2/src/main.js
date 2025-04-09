@@ -28,6 +28,11 @@ const base = process.env.NODE_ENV === "production" ? "/demo-vue2/" : "";
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
+
+window.$wujie?.bus.$on("loginOut", () => {
+  console.log('子应用loginOut', '主应用退出了')
+});
+
 debugger
 if (window.__POWERED_BY_WUJIE__) {
   let instance;
