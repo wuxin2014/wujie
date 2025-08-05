@@ -21,10 +21,11 @@
           @click="handleExport">导出</el-button>
       </div>
       <el-table
+        ref="multipleTable"
         border
         show-summary
         size="mini"
-        :data="form.list"
+        :data="renderList"
         :header-cell-style="{background: '#f5f7fa'}"
         :summary-method="getSummaries"
         style="width: 100%"
@@ -154,6 +155,7 @@
         <el-table-column
           prop="price"
           label="合同单价(元/吨)"
+          width="170"
           align="center">
           <template slot-scope="scope">
             <el-form-item
@@ -223,6 +225,7 @@
         <el-table-column
           prop="contract_no"
           label="合同编号"
+          width="170"
           align="center">
           <template slot-scope="scope">
             <el-form-item
@@ -294,6 +297,18 @@
           </template>
         </el-table-column>
       </el-table>
+      <div v-if="form.list.length > 10" style="display: flex; justify-content: flex-end; padding: 10px 0">
+        <el-pagination
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page="current"
+          :page-size="pageSize" 
+          :page-sizes="[10, 20, 50, 100]"
+          :total="form.list.length"
+          @current-change="handleCurrentPageChange"
+          @size-change="handleSizeChange">    
+        </el-pagination>
+      </div>
     </el-form>
   </div>
 </template>
@@ -339,7 +354,16 @@ export default {
         list: [],
         hedge_item_total_num: ''
       },
-      exportLoading: false
+      exportLoading: false,
+      current: 1,
+      pageSize: 10
+    }
+  },
+  computed: {
+    renderList() {
+      const startIndex = (this.current - 1) * this.pageSize
+      const endIndex = this.current * this.pageSize
+      return this.form.list.slice(startIndex, endIndex)
     }
   },
   watch: {
@@ -355,6 +379,7 @@ export default {
         })
         
         this.$nextTick(() => {
+          // this.$refs.multipleTable.doLayout( );
           this.$refs.tableForm && this.$refs.tableForm.clearValidate()
           this.form.list.forEach((item, index) => {
             this.$refs[`productName${index}`].resizeTextarea()
@@ -369,6 +394,13 @@ export default {
     }
   },
   methods: {
+    handleCurrentPageChange(current) {
+      this.current = current
+    },
+    handleSizeChange(size) {
+      this.current = 1
+      this.pageSize = size
+    },
     queryBuyerSearchName(queryString, callback) {
       const arr = queryString ? this.buyerHisList.filter(item => {
         return item.input_value && item.input_value.indexOf(queryString) > -1
@@ -547,20 +579,22 @@ export default {
   position: absolute !important;
   left: 0 !important;
 }
-/* // 若body样式有position:relative; 选择popper会展示不出来，需要设置el-table 的overflow为visible */
+/* 若body样式有position:relative; 选择popper会展示不出来，需要设置el-table 的overflow为visible或者auto */
 .table-form-wrapper .el-table {
   width: 100%;
-  /* overflow: auto !important; */
-  overflow: visible !important;
+  overflow: auto !important;
+  /* overflow: visible !important; */
 }
 
 .table-form-wrapper .el-table .el-table__body-wrapper {
-  /* overflow: auto !important; */
-  overflow: visible !important;
+  /* 当列项多要想有横向滚动必须设置这个样式overflow: auto */
+  overflow: auto !important; 
+  /* overflow: visible !important; */
 }
 
 .table-form-wrapper .el-table .cell {
-  overflow: visible !important;
+  /* 可以不设置 */
+  overflow1: visible !important;
 }
 
 .table-form-wrapper .header-label:before {

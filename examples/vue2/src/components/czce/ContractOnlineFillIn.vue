@@ -20,12 +20,6 @@
         type="HEDGE_CZCE_CONTRACT"
         :buyerHisList="contractBuyerList"
         :sellerHisList="contractSellerList" />
-      <div class="tips">
-        提示：
-        <p>
-          注：1.合同清单应该按照先采购合同、后销售合同的顺序填写，合同买、卖双方名称应填写全称；2.保值商品数量一般填写合同约定的货物数量，但合同为年度长期协议的，应填写与本次套保额度申请对应的合同交货数量，如不是以吨为单位的，应折算为吨，保值货物数量列应有合计数；3.单价如不是以元/吨为单位的，应按元/吨进行折算；4.如合同价格约定为点价的，尚未点价的在合同单价栏填写“未点价”，如已点价的，填写实际已点价的价格；5.部分客户以保密为由隐藏或遮盖合同单价的，合同单价栏填写“保密”；6.交货日期及签订日期应具体到年月日，不能具体到日的可以具体到月；7.如有合同编号，应填写表格合同编号栏，如无合同编号，可不填写；8.备注栏，可以填写关于此份合同需要说明的其他情况；9.本合同份数清单无需客户或会员盖章，由客户填写会员审核。
-        </p>
-      </div>
     </div>
     <div
       slot="footer"
@@ -187,12 +181,29 @@ export default {
 }
 </script>
 
-<style scoped>
-.tips {
-  font-size: 12px;
-  line-height: 20px;
-  text-align: left;
-  color: #666666;
-  padding: 16px 0;
+<style>
+.custom_dialog_wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom_dialog_wrap  .title-text {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.custom_dialog_wrap .el-dialog {
+  margin: 0 auto !important;
+  max-height: calc(100% - 40px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.custom_dialog_wrap .el-dialog .el-dialog__body {
+  max-height: calc(100% - 160px);
+  overflow-y: auto;
+  border-top: 1px solid #DCDFE6;
+  border-bottom: 1px solid #DCDFE6;
 }
 </style>

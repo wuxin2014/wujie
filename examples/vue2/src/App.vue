@@ -17,6 +17,9 @@ export default {
       window.$wujie?.bus.$emit("sub-route-change", "vue2", this.$route.path);
     },
   },
+  mounted() {
+    console.log('===', window.location)
+  }
 };
 </script>
 <style>

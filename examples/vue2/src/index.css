@@ -1,11 +1,11 @@
 html,
 body {
   font-size: 17.5px;
-  margin: 0;
-  padding: 0px;
   width: 100%;
-  position: relative;
   /* height: auto; */
+  margin: 0;
+  padding: 0;
+  position: relative;/* 验证无界-有跟没有会导致下拉框什么问题 */
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
