@@ -269,12 +269,15 @@ export default {
     console.log(window.parent === window)
     console.log(window.parent.document.body.clientWidth, document.body.clientWidth)
     console.log(window.parent.document.documentElement.clientHeight, document.documentElement.clientHeight)
+    // 子应用 window 是一个代理对象，如何获取子应用的真实对象？
+    // 通过 window.__WUJIE_RAW_WINDOW__ 获取真实的 window 对象。
+    console.log('sub-application', window === window.parent)
+    console.log('sub-application', window, window.__WUJIE_RAW_WINDOW__)
+    console.log('window.document.body==', window.document.body) // 注意子应用的body    
     this.$PLoading.show()
     setTimeout(() => {
       this.$PLoading.hide()
     }, 4000);
-    console.log('sub-application', window, window.parent)
-    console.log('window.document.body==', window.document.body) // 注意子应用的body
     // 针对级联控件的popperOption
     this.popperOptions = { ...this.popperOptions, boundariesElement: this.$refs.comp };
     this.$nextTick(()=>{
