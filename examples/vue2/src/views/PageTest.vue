@@ -290,6 +290,9 @@ export default {
       window.$wujie?.props?.scrollToTopByEl()
       // window.parent.scrollTo(0, 0)
     })
+    const el = document.querySelector('#target')
+    const rect = el.getBoundingClientRect()
+    console.log('rect', rect)
   },
   methods: {
     toggleBody(isPin = false) {
@@ -303,18 +306,19 @@ export default {
     getSY() {
       const el = document.querySelector('#target')
       if (!el) return
-      const headerHeight = 32 // 主应用内嵌外的内容高度
+      const headerHeight = 32 // 主应用内嵌外的内容高度(若悬浮则不用减去)
       // 子环境中getBoundingClientRect是真实视口坐标
       const rect = el.getBoundingClientRect()
       console.log('rect', rect)
+      
       // window.scrollY 子应用的window也被wujie代理，但是scrollY数值是正确的
       const scrollTop = window.scrollY
       const realTop = rect.top + scrollTop - headerHeight
       console.log('realTop', scrollTop, realTop)
-
-      // 只传数字，不传dom对象、不传选择器
+      // 滚动容器是window, 只传数字，不传dom对象、不传选择器
       // window.$wujie?.props?.scrollToTopByPosition(realTop, true)
 
+      // 滚动容器不是window处理逻辑
       if (window.$wujie?.props?.scrollToContainerByViewportTop) {
         window.$wujie.props.scrollToContainerByViewportTop(rect.top, true)
       } else {

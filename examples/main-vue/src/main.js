@@ -68,7 +68,7 @@ const props = {
       const headerHeight = 32
       // 元素在容器内的目标scrollTop
       const targetScrollTop = container.scrollTop + (elViewportTop - containerRect.top) - headerHeight
-      console.log('==targetScrollTop==', targetScrollTop)
+      console.log('==targetScrollTop==', container.scrollTop, elViewportTop, targetScrollTop, containerRect)
       if (smooth) {
         container.scrollTo({ top: targetScrollTop, left: 0, behavior: 'smooth' })
       } else {
