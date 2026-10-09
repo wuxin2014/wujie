@@ -178,6 +178,7 @@
         </el-col>
       </el-row>
     </el-form>
+    <div><button id="sBtn">获取元素的scrollTop</button></div>
     <el-button type="primary" @click="contractFillInDialogVisible = true">线上填写</el-button>
 
     <contract-online-fill-in
@@ -265,15 +266,18 @@ export default {
     }
   },
   mounted() {
-    console.log('===', window.location)
-    console.log(window.parent === window)
-    console.log(window.parent.document.body.clientWidth, document.body.clientWidth)
-    console.log(window.parent.document.documentElement.clientHeight, document.documentElement.clientHeight)
-    // 子应用 window 是一个代理对象，如何获取子应用的真实对象？
-    // 通过 window.__WUJIE_RAW_WINDOW__ 获取真实的 window 对象。
+    console.log('=子应用window=', window)
+    console.log('=window.parent=', window.parent)
+    console.log('=window.location=', window.location)
+    // 子应用window是一个代理对象，如何获取子应用的真实对象？
+    // 通过window.__WUJIE_RAW_WINDOW__获取真实的window对象。
     console.log('sub-application', window === window.parent)
     console.log('sub-application', window, window.__WUJIE_RAW_WINDOW__)
-    console.log('window.document.body==', window.document.body) // 注意子应用的body    
+
+    console.log('==主应用的窗口宽度==', window.parent.document.body.clientWidth)
+    console.log('==子应用的窗口宽度==', document.body.clientWidth)
+    console.log('window.document.body==', window.document.body.clientWidth) // 注意子应用的body
+    console.log(window.parent.document.documentElement.clientHeight, document.documentElement.clientHeight)
     this.$PLoading.show()
     setTimeout(() => {
       this.$PLoading.hide()
@@ -282,6 +286,9 @@ export default {
     this.popperOptions = { ...this.popperOptions, boundariesElement: this.$refs.comp };
     this.$nextTick(()=>{
       // this.$refs.cascaderRef.updatePopper();
+      // window.$wujie?.props?.scrollToTopByEl()
+      // window.parent.scrollTo(0, 0)
+      // this.getSY('#sBtn')
     })
   },
   methods: {
@@ -292,6 +299,25 @@ export default {
     },
     handleInput(data, e) {
       console.log('e.target====', e.target)
+    },
+    getSY(sName) {
+      const el = document.querySelector(sName)
+      if (!el) return
+      const headerHeight = 32 // 主应用内嵌外的内容高度
+      // 子环境中getBoundingClientRect是真实视口坐标
+      const rect = el.getBoundingClientRect()
+      console.log('rect', rect)
+      // window.scrollY 子应用的window也被wujie代理，但是scrollY数值是正确的
+      const realTop = rect.top + window.scrollY - headerHeight
+      console.log('realTop', window.scrollY, realTop)
+
+      if (window.__WUJIE__ && window.$wujie?.props?.scrollToTopByPosition) {
+        // 只传数字，不传dom对象、不传选择器
+        window.$wujie.props.scrollToTopByPosition(realTop, true)
+      } else {
+        // 本地独立运行兜底
+        window.scrollTo({ top: realTop, left:0, behavior:'smooth' })
+      }
     }
   }
 }

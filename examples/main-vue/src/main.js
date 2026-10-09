@@ -41,12 +41,51 @@ bus.$on("sub-route-change", (name, path) => {
   }
 });
 
-debugger
+// debugger
 const degrade = window.localStorage.getItem("degrade") === "true" || !window.Proxy || !window.CustomElementRegistry;
 const props = {
   jump: (name) => {
     router.push({ name });
   },
+  scrollToTopByEl: () => {
+    const el = document.querySelector('.content')
+    if (!el) return
+    requestAnimationFrame(() => {
+      el.scrollTo(0, 0)
+      el.scrollTop = 0
+      requestAnimationFrame(() => {
+        if (el.scrollTop > 0) {
+          el.scrollTo(0, 0)
+          el.scrollTop = 0
+        }
+      })
+    })
+  },
+  scrollToTop: () => {
+    console.log('==props.scrollToTop==')
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0
+      requestAnimationFrame(() => {
+        if (window.scrollY > 0) {
+          window.scrollTo(0, 0)
+          document.documentElement.scrollTop = 0
+        }
+      })
+    })
+  },
+  scrollToTopByPosition: (top, smooth = false) => {
+    requestAnimationFrame(() => {
+      if (smooth) {
+        window.scrollTo({ top, left: 0, behavior: 'smooth' })
+      } else {
+        window.scrollTo(0, top)
+        requestAnimationFrame(() => {
+          window.scrollTo(0, top)
+        })
+      }
+    })
+  }
 };
 /**
  * 大部分业务无需设置 attrs

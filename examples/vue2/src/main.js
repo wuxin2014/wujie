@@ -33,7 +33,7 @@ window.$wujie?.bus.$on("loginOut", () => {
   console.log('子应用loginOut', '主应用退出了')
 });
 
-debugger
+// debugger
 if (window.__POWERED_BY_WUJIE__) {
   let instance;
   window.__WUJIE_MOUNT = () => {

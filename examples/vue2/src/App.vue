@@ -18,7 +18,8 @@ export default {
     },
   },
   mounted() {
-    console.log('===', window.location)
+    console.log('=App=', window.location)
+    // window.$wujie?.props?.scrollToTop()
   }
 };
 </script>
