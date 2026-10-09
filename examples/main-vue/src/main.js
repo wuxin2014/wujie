@@ -61,6 +61,22 @@ const props = {
       })
     })
   },
+  scrollToContainerByViewportTop: (elViewportTop, smooth = false) => {
+    const container = document.querySelector('.content')
+    requestAnimationFrame(() => {
+      const containerRect = container.getBoundingClientRect()
+      const headerHeight = 32
+      // 元素在容器内的目标scrollTop
+      const targetScrollTop = container.scrollTop + (elViewportTop - containerRect.top) - headerHeight
+      console.log('==targetScrollTop==', targetScrollTop)
+      if (smooth) {
+        container.scrollTo({ top: targetScrollTop, left: 0, behavior: 'smooth' })
+      } else {
+        container.scrollTop = targetScrollTop
+        requestAnimationFrame(() => container.scrollTop = targetScrollTop)
+      }
+    })
+  },
   scrollToTop: () => {
     console.log('==props.scrollToTop==')
     requestAnimationFrame(() => {
@@ -85,7 +101,7 @@ const props = {
         })
       }
     })
-  }
+  },
 };
 /**
  * 大部分业务无需设置 attrs

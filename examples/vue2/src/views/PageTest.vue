@@ -1,5 +1,6 @@
 <template>
-  <div style="padding: 20px 0" ref="comp">
+  <div style="height: 1280px; padding: 20px 0" ref="comp">
+    <div id="target">目标位置元素</div>
     <el-form :model="searchForm" label-width="100px" size="small">
       <el-row>
         <el-col :span="8">
@@ -178,7 +179,7 @@
         </el-col>
       </el-row>
     </el-form>
-    <div><button id="sBtn">获取元素的scrollTop</button></div>
+    <el-button type="primary" @click="getSY">滚动到目标元素</el-button>
     <el-button type="primary" @click="contractFillInDialogVisible = true">线上填写</el-button>
 
     <contract-online-fill-in
@@ -286,9 +287,8 @@ export default {
     this.popperOptions = { ...this.popperOptions, boundariesElement: this.$refs.comp };
     this.$nextTick(()=>{
       // this.$refs.cascaderRef.updatePopper();
-      // window.$wujie?.props?.scrollToTopByEl()
+      window.$wujie?.props?.scrollToTopByEl()
       // window.parent.scrollTo(0, 0)
-      // this.getSY('#sBtn')
     })
   },
   methods: {
@@ -300,22 +300,24 @@ export default {
     handleInput(data, e) {
       console.log('e.target====', e.target)
     },
-    getSY(sName) {
-      const el = document.querySelector(sName)
+    getSY() {
+      const el = document.querySelector('#target')
       if (!el) return
       const headerHeight = 32 // 主应用内嵌外的内容高度
       // 子环境中getBoundingClientRect是真实视口坐标
       const rect = el.getBoundingClientRect()
       console.log('rect', rect)
       // window.scrollY 子应用的window也被wujie代理，但是scrollY数值是正确的
-      const realTop = rect.top + window.scrollY - headerHeight
-      console.log('realTop', window.scrollY, realTop)
+      const scrollTop = window.scrollY
+      const realTop = rect.top + scrollTop - headerHeight
+      console.log('realTop', scrollTop, realTop)
 
-      if (window.__WUJIE__ && window.$wujie?.props?.scrollToTopByPosition) {
-        // 只传数字，不传dom对象、不传选择器
-        window.$wujie.props.scrollToTopByPosition(realTop, true)
+      // 只传数字，不传dom对象、不传选择器
+      // window.$wujie?.props?.scrollToTopByPosition(realTop, true)
+
+      if (window.$wujie?.props?.scrollToContainerByViewportTop) {
+        window.$wujie.props.scrollToContainerByViewportTop(rect.top, true)
       } else {
-        // 本地独立运行兜底
         window.scrollTo({ top: realTop, left:0, behavior:'smooth' })
       }
     }
